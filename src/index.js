@@ -1,20 +1,27 @@
-class Project {
-    constructor(name){
-        this.name = name
+import { compareAsc, format } from "date-fns";
+
+function TasktoDO(title, priority, description, dueDate, notes){
+    return{
+        title,
+        description,
+        priority,
+        dueDate,
+        notes
     }
 }
 
-class taskTodo extends Project{
-    constructor(name,title,priority,decription,duedate){
-        super(name)
-        this.title = title;
-        this.priority = priority;
-        this.decription = decription;
-        this.duedate = duedate;
-
+function project(name){
+    const task = []
+    const addTask = (title,description,priority,dueDate,notes) => {
+        task.push(TasktoDO(title,priority,description,dueDate,notes));
     }
-}
-const project1 =  new Project("World Wide Chicken");
-const task1 = new taskTodo("Programming","wolrd wide chiken","do this and that and that",`${new Date}`,`${new Date(8.64e15).toString()}`)
+    return{
+        name,
+        task,
+        addTask,
+    }
+};
+const project1 = project("WORLD WIDE CHICKEN")
+project1.addTask("coding","high","working with factory functions",`${format(new Date(2014, 1, 11), "yyyy-MM-dd")}`,"factory functions are the best")
 console.log(project1)
-console.log(task1)
+
