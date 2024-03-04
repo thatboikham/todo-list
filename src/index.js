@@ -22,6 +22,9 @@ function project(name){
     }
 };
 const project1 = project("WORLD WIDE CHICKEN")
-project1.addTask("coding","high","working with factory functions",`${format(new Date(2014, 1, 11), "yyyy-MM-dd")}`,"factory functions are the best")
-console.log(project1)
 
+function createNewTask(projectObj,title,priority,description,dueDate,notes){
+    projectObj.addTask(title,priority,description,dueDate,notes);
+}
+createNewTask(project1,"coding","high","working with factory functions",`${format(new Date(2014, 1, 11), "yyyy-MM-dd")}`,"factory functions are the best")
+console.log(project1)
