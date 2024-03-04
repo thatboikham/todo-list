@@ -4,10 +4,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     index: './src/index.js',
+    print: `./src/print.js`
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      inject: 'header',
+      scriptloading: 'defer',
+      scriptags: [
+        {
+          src: '.scr/index.js'
+        },
+        {
+          src: '.scr/print.js'
+        },
+      ]
     }),
   ],
   output: {
