@@ -1,0 +1,31 @@
+*{
+    padding: 0;
+    margin: 0px;
+    box-sizing: border-box;
+}
+.container{
+    height: 100vh;
+    background-color:  #202020;
+    color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    font-size: 1.4em;
+}
+.sidebar{
+    background-color: red;
+}
+.logo{
+    font-size: clamp(20px, 4vw, 26px);
+}
+.menu{
+    margin: 0px 0px 40px;
+}
+.project-card,
+.addProject{
+    display: flex;
+    gap: 16px;
+    margin: 1em;
+}
+.addProject{
+    gap: 70px;
+}
