@@ -2,17 +2,22 @@
     padding: 0;
     margin: 0px;
     box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 .container{
     height: 100vh;
-    background-color:  #202020;
+    background-color:  #ffffff;
     color: #ffffff;
     display: grid;
     grid-template-columns: 1fr 4fr;
     font-size: 1.4em;
 }
 .sidebar{
-    background-color: red;
+    background-color: rgb(240, 240, 240, 100);
+    padding: 0.8em;
+    color: #030303;
+    font-weight: 300;
+    font-style: normal;
 }
 .logo{
     font-size: clamp(20px, 4vw, 26px);
@@ -27,5 +32,21 @@
     margin: 1em;
 }
 .addProject{
-    gap: 70px;
+    justify-content: space-between;
+}
+.main{
+    display: grid;
+    grid-template-rows: 150px 1fr;
+}
+.title{
+    background-color: #3399ff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.project-title {
+    width: 200px;
+    background-color: white;
+    height: 50px;
+    align-self: center;
 }
