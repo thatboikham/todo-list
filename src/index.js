@@ -1,4 +1,4 @@
-import { compareAsc, format } from "date-fns";
+// import { compareAsc, format } from "date-fns";
 
 function TasktoDO(title, priority, description, dueDate, notes,taskStatus){
     return{
@@ -52,8 +52,8 @@ const project1 = project("WORLD WIDE CHICKEN")
 function createNewTask(projectObj,title,priority,description,dueDate,notes){
     projectObj.addTask(title,priority,description,dueDate,notes);
 }
-createNewTask(project1,"coding","high","working with factory functions",`${format(new Date(2014, 1, 11), "yyyy-MM-dd")}`,"factory functions are the best")
-createNewTask(project1,"flight","high","working with factory functions",`${format(new Date(2014, 1, 11), "yyyy-MM-dd")}`,"factory functions are the best")
+createNewTask(project1,"coding","high","working with factory functions","factory functions are the best")
+createNewTask(project1,"flight","high","working with factory functions ","factory functions are the best")
 
 project1.changeStatus(0,"complete")
 project1.changePriority(0,"High")
@@ -61,3 +61,12 @@ console.log(project1)
 
 project1.deleteTodoList(1)
 console.log(project1)
+
+const projectDIalog = (function showProjectDIalog(){
+    const addBtn = document.querySelector("#add")
+    const myDialog = document.getElementById("ProjectDialog");
+
+    addBtn.addEventListener("click", () => {
+    myDialog.showModal();
+});
+})();

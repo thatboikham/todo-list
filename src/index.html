@@ -6,6 +6,7 @@
     <script src="https://kit.fontawesome.com/d005163ee0.js" crossorigin="anonymous" defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="./index.js" defer></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
@@ -33,9 +34,21 @@
             <div class="projects-div">
                 <div class="addProject">
                     <div class="project-header">Project</div>
-                    <span><i class="fa-solid fa-plus"></i></span>
+                    <span id="add"><i class="fa-solid fa-plus"></i></span>
                 </div>
                 <div class="projects"></div>
+<!-- A modal dialog containing a form -->
+<dialog id="ProjectDialog">
+    <form>
+        <h3>Create Project</h3>
+        <p>create the project title below</p>
+        <input type="text" placeholder="project title">
+      <div>
+        <button value="cancel" formmethod="dialog">Cancel</button>
+        <button id="confirmBtn" value="default">Create</button>
+      </div>
+    </form>
+  </dialog>
             </div>
         </div>
         <div class="main">
