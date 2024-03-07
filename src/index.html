@@ -39,13 +39,13 @@
                 <div class="projects"></div>
 <!-- A modal dialog containing a form -->
 <dialog id="ProjectDialog">
-    <form>
+    <form id="projectTitle">
         <h3>Create Project</h3>
         <p>create the project title below</p>
-        <input type="text" placeholder="project title">
+        <input type="text" placeholder="project title" name="title">
       <div>
         <button value="cancel" formmethod="dialog">Cancel</button>
-        <button id="confirmBtn" value="default">Create</button>
+        <button id="confirmBtn" value="default" type="submit">Create</button>
       </div>
     </form>
   </dialog>

@@ -63,10 +63,41 @@ project1.deleteTodoList(1)
 console.log(project1)
 
 const projectDIalog = (function showProjectDIalog(){
-    const addBtn = document.querySelector("#add")
-    const myDialog = document.getElementById("ProjectDialog");
+const addBtn = document.querySelector("#add")
+const myDialog = document.getElementById("ProjectDialog");
+addBtn.addEventListener("click", () => {
+myDialog.showModal();
 
-    addBtn.addEventListener("click", () => {
-    myDialog.showModal();
 });
 })();
+
+const formSubmision = () => {
+    const myDialog = document.getElementById("ProjectDialog");
+    const form = document.getElementById("projectTitle")
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const projectName = formData.get("title");
+        appendProject(projectName);
+
+        myDialog.close();
+        form.reset();
+    })
+}
+formSubmision();
+
+
+const appendProject =  (projectName) =>{
+    const projectDiv = document.querySelector(".projects");
+    const projectInstanceDiv = document.createElement("div");
+    const spanDiv = document.createElement("span");
+    const nameDiv = document.createElement("div");
+
+    nameDiv.textContent = `${projectName}`
+
+    projectInstanceDiv.appendChild(spanDiv);
+    projectInstanceDiv.appendChild(nameDiv);
+    projectDiv.appendChild(projectInstanceDiv);
+}
+
+
