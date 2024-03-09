@@ -40,7 +40,6 @@
 <dialog id="ProjectDialog">
     <form id="projectTitle">
         <h3>Create Project</h3>
-        <p>create the project title below</p>
         <input type="text" placeholder="project title" name="title">
       <div>
         <button value="cancel" formmethod="dialog">Cancel</button>
@@ -54,6 +53,40 @@
             <div class="title">
                 <div class="project-title"></div>
             </div>
+            <dialog id="tasks-dialog">
+                <form>
+                    <div class="task-title input">
+                        <label for="task-title" id="task-title">Title</label>
+                        <input type="text" id="task-title" name="task-title">
+                    </div>
+                    <div class="description">
+                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="due-date input">
+                        <label for="date">Due Date</label>
+                        <input type="date" name="date" id="date">
+                    </div>
+                    <div class="choose">
+                        <p class="small">priority</p>
+                          <div class="priority">
+                              <div>
+                                <input type="radio" id="high" name="high" value="high">
+                                <label for="child">High</label>
+                              </div>
+                        
+                              <div>
+                                <input type="radio" id="medium" name="medium" value="medium" checked>
+                                <label for="medium">Medium</label>
+                              </div>
+                        
+                              <div>
+                                <input type="radio" id="low" name="low" value="low">
+                                <label for="low">Low</label>
+                              </div>
+                          </div>
+                    </div>
+                </form>
+            </dialog>
             <div class="task-div"></div>
         </div>
     </div>

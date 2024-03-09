@@ -53,13 +53,14 @@
 dialog{
         align-self: center;
         margin: auto;
-        height: 200px;
-        width: 450px;
         border: none;
         border-radius: 10px;
         padding: .8em;
-        overflow: hidden;
-        text-align: center;
+}
+.sidebar dialog{
+    width: 450px; 
+    text-align: center;
+
 }
 dialog form h3{
     text-align: center;
@@ -71,7 +72,7 @@ dialog form input{
     border-radius: 5px;
     text-indent: 10px;
 }
-dialog form div{
+.sidebar form div{
     margin: 10px 0px 0px 0px;
     display: flex;
     justify-content: space-around;
@@ -83,4 +84,26 @@ form div button{
     padding: 0.5em;
     border-radius: 5px;
     width: 10rem;
+}
+.priority{
+    display: flex;
+    justify-content: start;
+}
+.priority > * {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    gap: 10px;
+}
+
+.task-title.input {
+    margin: 0px 0px 10px 0px;
+}
+.input{
+    display: flex;
+    gap: 20px;
+}
+.small{
+    font-size: 1rem;
+    margin-bottom: -10px;
 }

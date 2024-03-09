@@ -75,7 +75,7 @@ const formSubmision = (callback) => {
             callback(projectName);
 
             myDialog.close();
-            // form.reset();
+            form.reset();
         });
     } else {
         console.log("Form or dialog not found");
@@ -105,4 +105,7 @@ const appendProject =  (projectName) =>{
     projectDiv.appendChild(projectInstanceDiv);
 }
 
-
+(function showTaskDialog(){
+    const taskDialog = document.getElementById('tasks-dialog')
+    taskDialog.showModal();
+})();
