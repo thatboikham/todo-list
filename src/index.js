@@ -52,15 +52,6 @@ function project(name){
 function createNewTask(projectObj,title,priority,description,dueDate,notes){
     projectObj.addTask(title,priority,description,dueDate,notes);
 }
-// createNewTask(project1,"coding","high","working with factory functions","factory functions are the best")
-// createNewTask(project1,"flight","high","working with factory functions ","factory functions are the best")
-
-// project1.changeStatus(0,"complete")
-// project1.changePriority(0,"High")
-// console.log(project1)
-
-// project1.deleteTodoList(1)
-// console.log(project1)
 
 const projectDIalog = (function showProjectDIalog(){
 const addBtn = document.querySelector("#add")
@@ -84,7 +75,7 @@ const formSubmision = (callback) => {
             callback(projectName);
 
             myDialog.close();
-            form.reset();
+            // form.reset();
         });
     } else {
         console.log("Form or dialog not found");
