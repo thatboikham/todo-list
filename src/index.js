@@ -46,21 +46,21 @@ function project(name){
         deleteTodoList,
     }
 };
-const project1 = project("WORLD WIDE CHICKEN")
+// const project1 = project("WORLD WIDE CHICKEN")
 
 
 function createNewTask(projectObj,title,priority,description,dueDate,notes){
     projectObj.addTask(title,priority,description,dueDate,notes);
 }
-createNewTask(project1,"coding","high","working with factory functions","factory functions are the best")
-createNewTask(project1,"flight","high","working with factory functions ","factory functions are the best")
+// createNewTask(project1,"coding","high","working with factory functions","factory functions are the best")
+// createNewTask(project1,"flight","high","working with factory functions ","factory functions are the best")
 
-project1.changeStatus(0,"complete")
-project1.changePriority(0,"High")
-console.log(project1)
+// project1.changeStatus(0,"complete")
+// project1.changePriority(0,"High")
+// console.log(project1)
 
-project1.deleteTodoList(1)
-console.log(project1)
+// project1.deleteTodoList(1)
+// console.log(project1)
 
 const projectDIalog = (function showProjectDIalog(){
 const addBtn = document.querySelector("#add")
@@ -71,20 +71,32 @@ myDialog.showModal();
 });
 })();
 
-const formSubmision = () => {
+const formSubmision = (callback) => {
     const myDialog = document.getElementById("ProjectDialog");
-    const form = document.getElementById("projectTitle")
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const projectName = formData.get("title");
-        appendProject(projectName);
+    const form = document.getElementById("projectTitle");
 
-        myDialog.close();
-        form.reset();
-    })
+    if (form && myDialog) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const projectName = formData.get("title");
+
+            callback(projectName);
+
+            myDialog.close();
+            form.reset();
+        });
+    } else {
+        console.log("Form or dialog not found");
+    }
 }
-formSubmision();
+
+formSubmision((projectName) => {
+    console.log("Submitted project name:", projectName);
+    appendProject(projectName)
+});
+
+
 
 
 const appendProject =  (projectName) =>{
@@ -94,6 +106,8 @@ const appendProject =  (projectName) =>{
     const nameDiv = document.createElement("div");
 
     nameDiv.textContent = `${projectName}`
+    const newProject = project(`${projectName}`)
+    console.log(newProject)
 
     projectInstanceDiv.appendChild(spanDiv);
     projectInstanceDiv.appendChild(nameDiv);

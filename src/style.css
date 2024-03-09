@@ -72,7 +72,7 @@ dialog form input{
     text-indent: 10px;
 }
 dialog form div{
-    margin: 20px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
     display: flex;
     justify-content: space-around;
 }
