@@ -97,8 +97,7 @@ const appendProject =  (projectName) =>{
     const nameDiv = document.createElement("div");
 
     nameDiv.textContent = `${projectName}`
-    const newProject = project(`${projectName}`)
-    console.log(newProject)
+    createNewProject(projectName);
 
     projectInstanceDiv.appendChild(spanDiv);
     projectInstanceDiv.appendChild(nameDiv);
@@ -109,3 +108,9 @@ const appendProject =  (projectName) =>{
 //     const taskDialog = document.getElementById('tasks-dialog')
 //     taskDialog.showModal();
 // })();
+function createNewProject(projectName){
+    const newProject = project(`${projectName}`)
+    console.log(newProject)
+    return newProject;
+};
+// createNewProject("hellllo")
