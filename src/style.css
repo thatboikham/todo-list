@@ -36,7 +36,7 @@
 }
 .main{
     display: grid;
-    grid-template-rows: 150px 1fr;
+    grid-template-rows: 150px 50px 1fr;
 }
 .title{
     background-color: #3399ff;
@@ -106,4 +106,18 @@ form div button{
 .small{
     font-size: 1rem;
     margin-bottom: -10px;
+}
+#add-task {
+    display: flex;
+    justify-content: end;
+    align-items: baseline;
+    color: black;
+}
+.base{
+    display: flex;
+    align-items: baseline;
+    align-self: end;
+    gap: 10px;
+    margin-right: 1em;
+    font-size: 1.8rem;
 }

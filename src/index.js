@@ -105,7 +105,7 @@ const appendProject =  (projectName) =>{
     projectDiv.appendChild(projectInstanceDiv);
 }
 
-(function showTaskDialog(){
-    const taskDialog = document.getElementById('tasks-dialog')
-    taskDialog.showModal();
-})();
+// (function showTaskDialog(){
+//     const taskDialog = document.getElementById('tasks-dialog')
+//     taskDialog.showModal();
+// })();
