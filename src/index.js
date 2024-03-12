@@ -62,6 +62,42 @@ myDialog.showModal();
 });
 })();
 
+
+
+function createNewProject(projectName){
+    const newProject = project(`${projectName}`)
+    console.log(newProject)
+    return newProject;
+};
+
+// createNewProject("hellllo")
+
+let counter = 1;
+const appendProject =  (projectName) =>{
+    const projectDiv = document.querySelector(".projects");
+    const projectInstanceDiv = document.createElement("div");
+    const spanDiv = document.createElement("span");
+    const nameDiv = document.createElement("div");
+    nameDiv.setAttribute("projectId",`project${counter}`)
+    counter++;
+
+    nameDiv.textContent = `${projectName}`
+    nameDiv.classList.add("proj")
+    const newProject = createNewProject(projectName);
+    showTasks(newProject)
+
+    projectInstanceDiv.appendChild(spanDiv);
+    projectInstanceDiv.appendChild(nameDiv);
+    projectDiv.appendChild(projectInstanceDiv);
+
+    // const projject = document.querySelectorAll(".proj")
+    // console.log(projject)
+    displayTask();
+    
+}
+
+// console.log(showTasks(createNewProject("hello")))
+
 const formSubmision = (callback) => {
     const myDialog = document.getElementById("ProjectDialog");
     const form = document.getElementById("projectTitle");
@@ -84,33 +120,38 @@ const formSubmision = (callback) => {
 
 formSubmision((projectName) => {
     console.log("Submitted project name:", projectName);
-    appendProject(projectName)
+    appendProject(projectName);
 });
 
 
-
-
-const appendProject =  (projectName) =>{
-    const projectDiv = document.querySelector(".projects");
-    const projectInstanceDiv = document.createElement("div");
-    const spanDiv = document.createElement("span");
-    const nameDiv = document.createElement("div");
-
-    nameDiv.textContent = `${projectName}`
-    createNewProject(projectName);
-
-    projectInstanceDiv.appendChild(spanDiv);
-    projectInstanceDiv.appendChild(nameDiv);
-    projectDiv.appendChild(projectInstanceDiv);
+function showTasks(project){
+    console.log(project.task)
+    return project.task
 }
 
-// (function showTaskDialog(){
-//     const taskDialog = document.getElementById('tasks-dialog')
-//     taskDialog.showModal();
-// })();
-function createNewProject(projectName){
-    const newProject = project(`${projectName}`)
-    console.log(newProject)
-    return newProject;
-};
-// createNewProject("hellllo")
+function displayTask(){
+    const projects = document.querySelectorAll('.proj');
+    console.log(projects)
+    projects.forEach(project => {
+        project.addEventListener("click",(e) => {
+            const projectId = e.target.getAttribute("projectid");
+            const projectTitle = e.target.textContent;
+            const title = document.querySelector('.project-title');
+            console.log(title)
+            title.textContent = projectTitle;
+            const projectDiv = document.querySelector('.project-task')
+            let taskContainer = document.getElementById(`${projectId}-tasks`);
+
+
+            if(!taskContainer){
+                taskContainer = document.createElement('div');
+                taskContainer.id = `${projectId}-tasks`;
+                taskContainer.classList.add('task-container');
+
+                projectDiv.appendChild(taskContainer);
+            } 
+            taskContainer.style.display = 'block';
+            taskContainer.style.height = '100vh';
+        })
+    })
+}
