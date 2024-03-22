@@ -46,10 +46,12 @@
 }
 .project-title {
     background-color: white;
-    height: 50px;
     align-self: center;
     color: black;
     font-size: 1.5em;
+    min-width: 200px;
+    min-height: 50px;
+    padding: 5px;
 }
 dialog{
         align-self: center;
@@ -121,4 +123,13 @@ form div button{
     gap: 10px;
     margin-right: 1em;
     font-size: 1.8rem;
+}
+.submit-buton{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+#priority{
+    font-size: 0.7em;
+    /* padding: 1em; */
 }

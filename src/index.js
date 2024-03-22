@@ -1,4 +1,5 @@
 // import { compareAsc, format } from "date-fns";
+const myProject = [];
 
 function TasktoDO(title, priority, description, dueDate, notes,taskStatus){
     return{
@@ -62,41 +63,47 @@ myDialog.showModal();
 });
 })();
 
+const tasksDialog = (function showTaskDialog(){
+    const addicon = document.getElementById('add-tasks');
+    const taskDialog = document.getElementById('tasks-dialog');
+    addicon.addEventListener("click",() => {
+        taskDialog.showModal();
+    })
+})();
+
 
 
 function createNewProject(projectName){
     const newProject = project(`${projectName}`)
-    console.log(newProject)
     return newProject;
 };
 
-// createNewProject("hellllo")
 
-let counter = 1;
+let counter = 0;
 const appendProject =  (projectName) =>{
     const projectDiv = document.querySelector(".projects");
     const projectInstanceDiv = document.createElement("div");
     const spanDiv = document.createElement("span");
     const nameDiv = document.createElement("div");
+    nameDiv.id = counter
     nameDiv.setAttribute("projectId",`project${counter}`)
     counter++;
 
     nameDiv.textContent = `${projectName}`
     nameDiv.classList.add("proj")
-    const newProject = createNewProject(projectName);
-    showTasks(newProject)
+    const project = createNewProject(projectName);
+    myProject.push(project);
+    
+    const projectAtribute = nameDiv.getAttribute('projectId');
 
     projectInstanceDiv.appendChild(spanDiv);
     projectInstanceDiv.appendChild(nameDiv);
     projectDiv.appendChild(projectInstanceDiv);
 
-    // const projject = document.querySelectorAll(".proj")
-    // console.log(projject)
-    displayTask();
-    
+    nameDiv.addEventListener('click', () => {
+        displayTask(nameDiv.getAttribute('projectId'), project); // Pass project attribute here
+    });    
 }
-
-// console.log(showTasks(createNewProject("hello")))
 
 const formSubmision = (callback) => {
     const myDialog = document.getElementById("ProjectDialog");
@@ -119,39 +126,79 @@ const formSubmision = (callback) => {
 }
 
 formSubmision((projectName) => {
-    console.log("Submitted project name:", projectName);
     appendProject(projectName);
 });
 
-
-function showTasks(project){
-    console.log(project.task)
-    return project.task
+function appendTasks(projectAtribute, project) {
+    const taskContainer = document.getElementById(`${projectAtribute}-tasks`);
+    const projectDiv = document.querySelector('.project-task');
+    if (taskContainer) {
+        taskContainer.innerHTML = ''; // Clear the container first
+        project.task.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.textContent = task.title;
+            taskContainer.appendChild(taskElement);
+        });
+        projectDiv.appendChild(taskContainer); // Move this line inside the if block
+    } else {
+        console.error(`Task container ${projectAtribute}-tasks not found.`);
+    }
+    console.log(taskContainer);
 }
 
-function displayTask(){
-    const projects = document.querySelectorAll('.proj');
-    console.log(projects)
-    projects.forEach(project => {
-        project.addEventListener("click",(e) => {
-            const projectId = e.target.getAttribute("projectid");
-            const projectTitle = e.target.textContent;
-            const title = document.querySelector('.project-title');
-            console.log(title)
-            title.textContent = projectTitle;
-            const projectDiv = document.querySelector('.project-task')
-            let taskContainer = document.getElementById(`${projectId}-tasks`);
 
 
-            if(!taskContainer){
-                taskContainer = document.createElement('div');
-                taskContainer.id = `${projectId}-tasks`;
-                taskContainer.classList.add('task-container');
+function TaskFormSubmition(projectAtribute, project, callback){
+    const taskForm = document.getElementById('task-form');
+    const taskDialog = document.getElementById('tasks-dialog');
 
-                projectDiv.appendChild(taskContainer);
-            } 
-            taskContainer.style.display = 'block';
-            taskContainer.style.height = '100vh';
-        })
-    })
+    const handleTaskFormSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(taskForm);
+        const taskTitle = formData.get('task-title');
+        const taskDescription = formData.get('description');
+        const taskDueDate = formData.get('date');
+        const taskPriority = formData.get('priority');
+
+        callback(project, taskTitle, taskDescription, taskDueDate, taskPriority, projectAtribute); // Pass projectAtribute
+
+        taskDialog.close();
+        taskForm.reset();
+        // appendTasks(projectAtribute, project); //here i get projectAtribute is not defined
+
+    };
+    taskForm.removeEventListener('submit', handleTaskFormSubmit);
+    taskForm.addEventListener('submit', handleTaskFormSubmit); 
 }
+
+function displayTask(projectAtribute, project){
+    const title = document.querySelector('.project-title');
+    const projectDiv = document.querySelector('.project-task');
+    console.log(projectAtribute);
+    let taskContainer = document.getElementById(`${projectAtribute}-tasks`);
+    console.log(taskContainer)
+    if(taskContainer){
+        taskContainer.style.display = 'none';
+    }
+
+    if (project) {
+        title.textContent = project.name;
+        TaskFormSubmition(projectAtribute, project, (project, title, priority, description, dueDate, projectAtribute) => {
+            project.addTask(title, priority, description, dueDate);
+            appendTasks(projectAtribute, project);
+        });    
+    }
+
+     if(!taskContainer){
+        taskContainer = document.createElement('div');
+        taskContainer.id = `${projectAtribute}-tasks`;
+        taskContainer.classList.add('task-container');
+
+        projectDiv.appendChild(taskContainer);
+    } 
+
+    taskContainer.style.display = 'block';
+    taskContainer.style.height = '100vh';
+    taskContainer.style.color = 'black';
+}
+console.log(myProject);

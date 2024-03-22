@@ -51,10 +51,10 @@
         </div>
         <div class="main">
             <div class="title">
-                <div class="project-title"></div>
+                <div class="project-title">Project Title</div>
             </div>
             <div id="add-task">
-                <div class="base">
+                <div class="base" id="add-tasks">
                     <i class="fa-solid fa-circle-plus"></i>
                     <div>Add Task</div>
                 </div>
@@ -63,7 +63,7 @@
                 
             </div>
             <dialog id="tasks-dialog">
-                <form>
+                <form id="task-form">
                     <div class="task-title input">
                         <label for="task-title" id="task-title">Title</label>
                         <input type="text" id="task-title" name="task-title">
@@ -78,21 +78,15 @@
                     <div class="choose">
                         <p class="small">priority</p>
                           <div class="priority">
-                              <div>
-                                <input type="radio" id="high" name="high" value="high">
-                                <label for="child">High</label>
-                              </div>
-                        
-                              <div>
-                                <input type="radio" id="medium" name="medium" value="medium" checked>
-                                <label for="medium">Medium</label>
-                              </div>
-                        
-                              <div>
-                                <input type="radio" id="low" name="low" value="low">
-                                <label for="low">Low</label>
-                              </div>
+                              <select name="priority" id="priority">
+                                <option value="high">High</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="low">Low</option>
+                              </select>
                           </div>
+                    </div>
+                    <div class="submit-buton">
+                        <button type="submit">Create Task</button>
                     </div>
                 </form>
             </dialog>
