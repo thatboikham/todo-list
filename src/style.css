@@ -134,3 +134,9 @@ form div button{
     font-size: 0.7em;
     /* padding: 1em; */
 }
+.project-task > *{
+    display: none;
+}
+.active{
+    display: block;
+}

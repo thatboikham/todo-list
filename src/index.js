@@ -130,9 +130,11 @@ function appendTasks(project) {
         taskContainer = document.createElement('div');
         taskContainer.id = `${project.name}-tasks`;
         taskContainer.classList.add('task-container');
+        taskContainer.classList.add('tasks');
     }
     taskContainer.innerHTML = "";
     project.tasks.forEach(task => {
+        taskContainer.classList.add('active');
         const taskElement = document.createElement('div');
         taskElement.textContent = task.title;
         taskContainer.appendChild(taskElement);
@@ -149,7 +151,7 @@ const ProjectIndex = (nameDiv) => {
 function taskFormSubmission() {
     const taskForm = document.getElementById('task-form');
     const taskDialog = document.getElementById('tasks-dialog');
-    
+
     const index = selectedIndex;
     const project = myProject[index];
     console.log(project)
@@ -179,10 +181,20 @@ function taskFormSubmission() {
 
 function displayTask(project) {
     const title = document.querySelector('.project-title');
-    const projectDiv = document.querySelector('.project-task');
     title.textContent = project.name;
-    // appendTasks(project);
-    // console.log(currentProject)s
+    appendTasks(project);
+    const taskContainer = document.getElementById(`${project.name}-tasks`);
+    activeProjectTask(taskContainer);
+}
+
+const activeProjectTask = (clickedProjectDiv) => {
+    const projectDiv = document.querySelector('.project-task');
+    const allTaskContainers = projectDiv.querySelectorAll('.tasks');
+
+    for(let i = 0; i < allTaskContainers.length;i++){
+        allTaskContainers[i].style.display = "none";
+    }
+    clickedProjectDiv.style.display = "block";
 }
 
 const myProject = [];
