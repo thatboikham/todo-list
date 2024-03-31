@@ -1,8 +1,8 @@
 function TasktoDO(title, priority, description, dueDate, notes, taskStatus) {
     return {
         title,
-        description,
         priority,
+        description,
         dueDate,
         notes,
         taskStatus: taskStatus || "incomplete",
@@ -12,7 +12,7 @@ function TasktoDO(title, priority, description, dueDate, notes, taskStatus) {
 function Project(name) {
     const tasks = [];
 
-    function addTask(title, description, priority, dueDate, notes) {
+    function addTask(title, priority, description, dueDate, notes) {
         const newTask = TasktoDO(title, priority, description, dueDate, notes);
         tasks.push(newTask);
     }
@@ -135,9 +135,10 @@ function appendTasks(project) {
     taskContainer.innerHTML = "";
     project.tasks.forEach(task => {
         taskContainer.classList.add('active');
-        const taskElement = document.createElement('div');
-        taskElement.textContent = task.title;
-        taskContainer.appendChild(taskElement);
+        // const taskElement = document.createElement('div');
+        // taskElement.textContent = task.title;
+        // taskContainer.appendChild(taskElement);
+        createTaskDiv(taskContainer,task.title,task.dueDate,task.priority);
     });
 
     projectDiv.appendChild(taskContainer);
@@ -196,6 +197,39 @@ const activeProjectTask = (clickedProjectDiv) => {
     }
     clickedProjectDiv.style.display = "block";
 }
+
+const createTaskDiv = (taskContainer,title,dueDate,priority) => {
+    const box = document.createElement('div');
+    const rightdiv = document.createElement('div');
+    const leftdiv = document.createElement('div');
+    const checkbox = document.createElement('input');
+    const titlediv = document.createElement('div');
+    const dueDateDiv = document.createElement('div');
+    const priorityDiv = document.createElement('div');
+    const deleteDiv = document.createElement('div');
+    let counter = 0;
+
+    box.classList.add('task-box');
+    box.setAttribute('data-task-index',`${counter}`);
+    rightdiv.classList.add('right');
+    leftdiv.classList.add('left');
+    checkbox.setAttribute('type','checkbox');
+    titlediv.classList.add('task-title','center');
+    dueDateDiv.classList.add('task-date','center');
+    priorityDiv.classList.add('task-prority','center');
+    deleteDiv.classList.add('delete-task','center');
+
+    titlediv.textContent = title;
+    dueDateDiv.textContent = dueDate;
+    priorityDiv.textContent = priority;
+    deleteDiv.textContent = "Delete"
+
+    taskContainer.append(box);
+    leftdiv.append(checkbox,titlediv);
+    rightdiv.append(dueDateDiv,priorityDiv,deleteDiv)
+    box.append(leftdiv,rightdiv);
+    counter++;
+};
 
 const myProject = [];
 console.log(myProject)
