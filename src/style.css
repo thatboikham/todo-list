@@ -169,3 +169,7 @@ form div button{
 .green{
     border-left: 8px solid green;
 };
+.projects > *{
+    display: flex;
+    justify-content: space-between;
+}

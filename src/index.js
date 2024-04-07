@@ -91,12 +91,19 @@ function appendProject(projectName) {
     nameDiv.setAttribute("data-Index-Number", `${counter}`)
     counter++;
 
-    nameDiv.textContent = `${projectName}`
-    nameDiv.classList.add("proj")
+    nameDiv.textContent = `${projectName}`;
+    nameDiv.classList.add("proj");
+    projectInstanceDiv.style.cssText = "display: flex; justify-content: space-between";
+    projectInstanceDiv.setAttribute("id", "project");
+    spanDiv.innerHTML = '<i class="fa-solid fa-trash-can" style="color: #ff0000;"></i>';
+    spanDiv.addEventListener("click",() => {
+        // const project = myProject[selectedIndex];
+        deleteProject(projectInstanceDiv);
+    })
     const project = createNewProject(projectName);
 
-    projectInstanceDiv.appendChild(spanDiv);
     projectInstanceDiv.appendChild(nameDiv);
+    projectInstanceDiv.appendChild(spanDiv);
     projectDiv.appendChild(projectInstanceDiv);
 
     nameDiv.addEventListener('click', () => {
@@ -269,6 +276,12 @@ const changeColor = (priority,priorityDiv,box) =>{
             break;
             default:
     }
+};
+
+const deleteProject = (projectInstanceDiv) => {
+    const index = selectedIndex;
+    myProject.splice(index, 1);
+    projectInstanceDiv.remove();
 };
 
 const myProject = [];
