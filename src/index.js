@@ -115,9 +115,11 @@ function appendProject(projectName) {
     });
 }
 
-function formSubmission() {
+function ProjectSubmission() {
     const myDialog = document.getElementById("ProjectDialog");
     const form = document.getElementById("projectTitle");
+    const cancelBtn = form.querySelector('[value = "cancel"]')
+    // const confrimBtn = form.querySelector("#confirmBtn");
 
     if (form && myDialog) {
         form.addEventListener("submit", (e) => {
@@ -128,8 +130,29 @@ function formSubmission() {
             myDialog.close();
             form.reset();
         });
+        form.addEventListener("keydown",(e) => {
+            const code = e.keyCode;
+            const enterCode = 13;
+            if(code === enterCode){
+                e.preventDefault();
+                const formData = new FormData(form);
+                const projectName = formData.get("title");
+                appendProject(projectName);
+                myDialog.close();
+                form.reset();
+            }
+        })
     } else {
         console.log("Form or dialog not found");
+    }
+
+    if(cancelBtn){
+        cancelBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            myDialog.close();
+            form.reset();
+            console.log("Cancelled project submission");
+        })
     }
 }
 
@@ -289,5 +312,5 @@ console.log(myProject)
 
 showProjectDialog();
 showTaskDialog();
-formSubmission();
+ProjectSubmission();
 taskFormSubmission();
