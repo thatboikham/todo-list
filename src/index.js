@@ -90,7 +90,7 @@ function appendProject(projectName) {
     nameDiv.setAttribute("projectId", `project${counter}`)
     nameDiv.setAttribute("data-Index-Number", `${counter}`)
     counter++;
-
+    
     nameDiv.textContent = `${projectName}`;
     nameDiv.classList.add("proj");
     projectInstanceDiv.style.cssText = "display: flex; justify-content: space-between";
@@ -272,6 +272,7 @@ const createTaskDiv = (() => {
         box.append(leftdiv, rightdiv);
         counter++; // Increment the counter for the next task
         changeColor(priority,priorityDiv,box);
+        cancelTask(box,checkbox);
     };
 })();
 
@@ -305,6 +306,18 @@ const deleteProject = (projectInstanceDiv) => {
     const index = selectedIndex;
     myProject.splice(index, 1);
     projectInstanceDiv.remove();
+};
+
+function cancelTask(taskBox,checkbox){
+    const hrLine = document.createElement('hr');
+    checkbox.addEventListener('change',function(){
+        if(this.checked){
+            taskBox.append(hrLine);
+        }else{
+             hrLine.remove();
+        }
+        console.log(this.checked)
+   })
 };
 
 const myProject = [];
