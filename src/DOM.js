@@ -1,82 +1,6 @@
-function TasktoDO(title, priority, description, dueDate, notes, taskStatus) {
-    return {
-        title,
-        priority,
-        description,
-        dueDate,
-        notes,
-        taskStatus: taskStatus || "incomplete",
-    }
-}
-
-function Project(name) {
-    const tasks = [];
-    let index = 0;
-
-    function addTask(title, priority, description, dueDate, notes) {
-        const newTask = TasktoDO(title, priority, description, dueDate, notes);
-        newTask.index = index;
-        index++;
-        tasks.push(newTask);
-    }
-
-    function changeStatus(index, newStatus) {
-        const statusOptions = ["pending", "inprogress", "complete"];
-        if (statusOptions.includes(newStatus)) {
-            tasks[index].taskStatus = newStatus;
-        } else {
-            console.error("Invalid status provided.");
-        }
-    }
-
-    function changePriority(index, priority) {
-        const priorityOptions = ["High", "Medium", "Low"];
-        if (priorityOptions.includes(priority)) {
-            tasks[index].priority = priority;
-        } else {
-            console.error('Invalid priority provided');
-        }
-    }
-
-    function deleteTask(index) {
-        tasks.splice(index, 1);
-    }
-
-    return {
-        name,
-        tasks,
-        addTask,
-        changeStatus,
-        changePriority,
-        deleteTask,
-    }
-}
-
-function createNewTask(projectObj, title, priority, description, dueDate, notes) {
-    projectObj.addTask(title, priority, description, dueDate, notes);
-}
-
-function showProjectDialog() {
-    const addBtn = document.querySelector("#add");
-    const myDialog = document.getElementById("ProjectDialog");
-    addBtn.addEventListener("click", () => {
-        myDialog.showModal();
-    });
-}
-
-function showTaskDialog() {
-    const addicon = document.getElementById('add-tasks');
-    const taskDialog = document.getElementById('tasks-dialog');
-    addicon.addEventListener("click", () => {
-        taskDialog.showModal();
-    });
-}
-
-function createNewProject(projectName) {
-    const project = Project(projectName);
-    myProject.push(project);
-    return project;
-}
+import {myProject,createNewProject,ProjectSubmission} from "./project";
+import { showProjectDialog,showTaskDialog } from "./dialog";
+import { taskFormSubmission } from "./tasks";
 
 let counter = 0;
 let selectedIndex = -1;
@@ -113,94 +37,6 @@ function appendProject(projectName) {
         console.log(project)
         displayTask(project);
     });
-}
-
-function ProjectSubmission() {
-    const myDialog = document.getElementById("ProjectDialog");
-    const form = document.getElementById("projectTitle");
-    const cancelBtn = form.querySelector('[value = "cancel"]')
-    // const confrimBtn = form.querySelector("#confirmBtn");
-
-    if (form && myDialog) {
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const projectName = formData.get("title");
-            appendProject(projectName);
-            myDialog.close();
-            form.reset();
-        });
-        form.addEventListener("keydown",(e) => {
-            const code = e.keyCode;
-            const enterCode = 13;
-            if(code === enterCode){
-                e.preventDefault();
-                const formData = new FormData(form);
-                const projectName = formData.get("title");
-                appendProject(projectName);
-                myDialog.close();
-                form.reset();
-            }
-        })
-    } else {
-        console.log("Form or dialog not found");
-    }
-
-    if(cancelBtn){
-        cancelBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            myDialog.close();
-            form.reset();
-            console.log("Cancelled project submission");
-        })
-    }
-}
-
-function appendTasks(project) {
-    const taskContainer = document.getElementById(`${project.name}-tasks`);
-
-    project.tasks.forEach(task => {
-        const existingTask = taskContainer.querySelector(`[data-title="${task.title}"]`);
-        if (!existingTask) {
-            createTaskDiv(taskContainer, task.title, task.dueDate, task.priority);
-        }
-    });
-}
-
-const ProjectIndex = (nameDiv) => {
-    console.log(nameDiv.dataset.indexNumber);
-    return nameDiv.dataset.indexNumber;
-}
-
-function taskFormSubmission() {
-    const taskForm = document.getElementById('task-form');
-    const taskDialog = document.getElementById('tasks-dialog');
-
-    const index = selectedIndex;
-    const project = myProject[index];
-    console.log(project)
-
-    const handleTaskFormSubmit = (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(taskForm);
-        const taskTitle = formData.get('task-title');
-        const taskDescription = formData.get('description');
-        const taskDueDate = formData.get('date');
-        const taskPriority = formData.get('priority');
-
-        if (selectedIndex >= 0 && selectedIndex < myProject.length) {
-            const project = myProject[selectedIndex];
-            if (project) {
-                project.addTask(taskTitle, taskPriority, taskDescription, taskDueDate);
-                appendTasks(project);
-                console.log(project)
-            }
-        }
-        taskDialog.close();
-        taskForm.reset();
-    };
-    taskForm.addEventListener('submit', handleTaskFormSubmit);
 }
 
 function displayTask(project) {
@@ -320,10 +156,11 @@ function cancelTask(taskBox,checkbox){
    })
 };
 
-const myProject = [];
-console.log(myProject)
+// const myProject = [];
+// console.log(myProject)
 
 showProjectDialog();
 showTaskDialog();
 ProjectSubmission();
 taskFormSubmission();
+export{createTaskDiv,appendProject,selectedIndex}

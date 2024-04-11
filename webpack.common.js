@@ -3,8 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './src/index.js',
-    print: `./src/print.js`
+    index: './src/DOM.js',
+    project: './src/project.js',
+    tasks: './src/tasks.js',
+    dialog: './src/dialog.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -13,10 +15,16 @@ module.exports = {
       scriptloading: 'defer',
       scriptags: [
         {
-          src: '.scr/index.js'
+          src: '.scr/DOM.js'
         },
         {
-          src: '.scr/print.js'
+          src: '.scr/project.js'
+        },
+        {
+          src: '.scr/tasks.js'
+        },
+        {
+          src: '.scr/dialog.js'
         },
       ]
     }),
