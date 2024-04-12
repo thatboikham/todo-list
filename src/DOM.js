@@ -22,7 +22,7 @@ function appendProject(projectName) {
     spanDiv.innerHTML = '<i class="fa-solid fa-trash-can" style="color: #ff0000;"></i>';
     spanDiv.addEventListener("click",() => {
         // const project = myProject[selectedIndex];
-        deleteProject(projectInstanceDiv);
+        deleteProject(projectInstanceDiv,projectName);
     })
     const project = createNewProject(projectName);
 
@@ -138,10 +138,12 @@ const changeColor = (priority,priorityDiv,box) =>{
     }
 };
 
-const deleteProject = (projectInstanceDiv) => {
+const deleteProject = (projectInstanceDiv,projectName) => {
     const index = selectedIndex;
+    const taskContainer = document.getElementById(`${projectName}-tasks`);
     myProject.splice(index, 1);
     projectInstanceDiv.remove();
+    taskContainer.remove();
 };
 
 function cancelTask(taskBox,checkbox){
