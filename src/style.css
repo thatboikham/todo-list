@@ -176,6 +176,14 @@ form div button{
 }
 #project{
     gap: 20px;
+    padding: 0.1rem 0.6em;
+    border-radius: 5px;
+}
+#project:hover{
+    background-color: #d8d8d8;
+}
+#project:hover .dropdown{
+    display: block;
 }
 .task-box hr {
     position: absolute;
@@ -189,3 +197,41 @@ input[type=checkbox] {
     width: 20px;
     height: 20px;
 }
+.dropdown{
+    position: relative;
+    cursor: pointer;
+    display: none;
+}
+.dropdown-content{
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    z-index: 1;
+    border-radius: 10px;
+}
+.show-content{
+    display: block;
+}
+.dropdown-content > span{
+    display: flex;
+    gap: 16px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px 5px;
+}
+.dropdown-content > span:hover{
+    background-color: #f0f0f0;
+}
+.dropdown-content .fa-solid
+,.dropdown-content > span > p{
+    font-size: 0.7em;
+}
+
+[contenteditable] {
+    outline: 0px solid transparent;
+  }

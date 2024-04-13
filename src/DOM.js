@@ -8,26 +8,43 @@ function appendProject(projectName) {
 
     const projectDiv = document.querySelector(".projects");
     const projectInstanceDiv = document.createElement("div");
-    const spanDiv = document.createElement("span");
     const nameDiv = document.createElement("div");
+    const dropdown = document.createElement("div");
+    const dropdownContent = document.createElement("div");
+    const horizotalDotts = document.createElement("span");
+    const deleteIcon = document.createElement("span");
+    const renameIcon = document.createElement("span");
     nameDiv.id = counter
-    nameDiv.setAttribute("projectId", `project${counter}`)
-    nameDiv.setAttribute("data-Index-Number", `${counter}`)
+    nameDiv.setAttribute("projectId", `project${counter}`);
+    nameDiv.setAttribute("data-Index-Number", `${counter}`);
+    nameDiv.focus();
     counter++;
     
     nameDiv.textContent = `${projectName}`;
     nameDiv.classList.add("proj");
+    dropdown.classList.add("dropdown");
+    dropdownContent.classList.add("dropdown-content")
     projectInstanceDiv.style.cssText = "display: flex; justify-content: space-between";
     projectInstanceDiv.setAttribute("id", "project");
-    spanDiv.innerHTML = '<i class="fa-solid fa-trash-can" style="color: #ff0000;"></i>';
-    spanDiv.addEventListener("click",() => {
+    horizotalDotts.innerHTML = '<i class="fa-solid fa-ellipsis-vertical"></i>';
+    renameIcon.innerHTML = '<i class="fa-solid fa-pen"></i><p>Rename<p/>';
+    deleteIcon.innerHTML = '<i class="fa-solid fa-trash-can" style="color: #ff0000;"></i><p>Delete<p/>';
+    deleteIcon.addEventListener("click",() => {
         // const project = myProject[selectedIndex];
         deleteProject(projectInstanceDiv,projectName);
-    })
+    });
+    horizotalDotts.addEventListener('click',() => {
+        dropdownContent.classList.toggle('show-content');
+    });
+    document.body.addEventListener("click",() => {
+        dropdownContent.classList.remove("show-content");
+    },true)
     const project = createNewProject(projectName);
 
     projectInstanceDiv.appendChild(nameDiv);
-    projectInstanceDiv.appendChild(spanDiv);
+    dropdownContent.append(renameIcon, deleteIcon);
+    dropdown.append(horizotalDotts,dropdownContent);
+    projectInstanceDiv.appendChild(dropdown);
     projectDiv.appendChild(projectInstanceDiv);
 
     nameDiv.addEventListener('click', () => {
@@ -37,6 +54,14 @@ function appendProject(projectName) {
         console.log(project)
         displayTask(project);
     });
+    renameIcon.addEventListener("click", () => {
+        nameDiv.setAttribute("contenteditable", 'true');
+        nameDiv.focus();
+        nameDiv.addEventListener("input",() => {
+            const newName = nameDiv.innerText;
+            project.name = newName;
+        })
+    })
 }
 
 function displayTask(project) {
