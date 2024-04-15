@@ -1,6 +1,7 @@
 import {myProject,createNewProject,ProjectSubmission} from "./project";
 import { showProjectDialog,showTaskDialog } from "./dialog";
 import { taskFormSubmission } from "./tasks";
+import { roundToNearestMinutes } from "date-fns";
 
 let counter = 0;
 let selectedIndex = -1;
@@ -54,13 +55,17 @@ function appendProject(projectName) {
         console.log(project)
         displayTask(project);
     });
-    renameIcon.addEventListener("click", () => {
+    const handelRename = () => {
         nameDiv.setAttribute("contenteditable", 'true');
         nameDiv.focus();
         nameDiv.addEventListener("input",() => {
             const newName = nameDiv.innerText;
             project.name = newName;
-        })
+        },false)
+    };
+    renameIcon.addEventListener("click", handelRename);
+    nameDiv.addEventListener("mousemove",() => {
+        nameDiv.setAttribute("contenteditable", 'false');
     })
 }
 
