@@ -29,6 +29,12 @@ function Project(name) {
             console.error('Invalid priority provided');
         }
     }
+    function editTask(index,newTitle,newPriority,newDescription,newDueDate){
+        tasks[index].title = newTitle;
+        tasks[index].priority = newPriority;
+        tasks[index].description = newDescription;
+        tasks[index].dueDate = newDueDate
+    };
 
     function deleteTask(index) {
         tasks.splice(index, 1);
@@ -41,6 +47,7 @@ function Project(name) {
         changeStatus,
         changePriority,
         deleteTask,
+        editTask,
     }
 }
 

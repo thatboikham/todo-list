@@ -17,7 +17,7 @@ function appendTasks(project) {
     project.tasks.forEach(task => {
         const existingTask = taskContainer.querySelector(`[data-title="${task.title}"]`);
         if (!existingTask) {
-            createTaskDiv(taskContainer, task.title, task.dueDate, task.priority);
+            createTaskDiv(taskContainer, task.title, task.dueDate, task.priority,task.description);
         }
     });
 };

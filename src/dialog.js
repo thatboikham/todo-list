@@ -11,6 +11,7 @@ function showTaskDialog() {
     addicon.addEventListener("click", () => {
         taskDialog.showModal();
     });
-}
+};
+
 
 export{showProjectDialog, showTaskDialog};

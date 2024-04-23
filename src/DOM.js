@@ -1,7 +1,8 @@
 import {myProject,createNewProject,ProjectSubmission} from "./project";
-import { showProjectDialog,showTaskDialog } from "./dialog";
+import { showProjectDialog,showTaskDialog} from "./dialog";
 import { taskFormSubmission } from "./tasks";
 import { roundToNearestMinutes } from "date-fns";
+import { tr } from "date-fns/locale/tr";
 
 let counter = 0;
 let selectedIndex = -1;
@@ -37,9 +38,9 @@ function appendProject(projectName) {
     horizotalDotts.addEventListener('click',() => {
         dropdownContent.classList.toggle('show-content');
     });
-    document.body.addEventListener("click",() => {
+    dropdownContent.addEventListener("mouseleave", () => {
         dropdownContent.classList.remove("show-content");
-    },true)
+    });
     const project = createNewProject(projectName);
 
     projectInstanceDiv.appendChild(nameDiv);
@@ -62,9 +63,10 @@ function appendProject(projectName) {
             const newName = nameDiv.innerText;
             project.name = newName;
         },false)
+        dropdownContent.classList.remove("show-content");
     };
     renameIcon.addEventListener("click", handelRename);
-    nameDiv.addEventListener("mousemove",() => {
+    nameDiv.addEventListener("mouseout",() => {
         nameDiv.setAttribute("contenteditable", 'false');
     })
 }
@@ -98,11 +100,10 @@ const activeProjectTask = (clickedProjectDiv) => {
     }
     clickedProjectDiv.style.display = "block";
 }
-
 const createTaskDiv = (() => {
     let counter = 0; // Counter is encapsulated within this function
 
-    return (taskContainer, title, dueDate, priority) => {
+    return (taskContainer, title, dueDate, priority,description) => {
         const box = document.createElement('div');
         const rightdiv = document.createElement('div');
         const leftdiv = document.createElement('div');
@@ -131,16 +132,18 @@ const createTaskDiv = (() => {
         dueDateDiv.textContent = dueDate;
         priorityDiv.textContent = priority;
         deleteDiv.textContent = "Delete";
-
+        
         taskContainer.append(box);
         leftdiv.append(checkbox, titlediv);
         rightdiv.append(dueDateDiv, priorityDiv,deleteDiv);
         box.append(leftdiv, rightdiv);
-        counter++; // Increment the counter for the next task
+        counter++;
         changeColor(priority,priorityDiv,box);
         cancelTask(box,checkbox);
+        editTask(box,title, dueDate, priority,description,titlediv,dueDateDiv,priorityDiv)
     };
 })();
+
 
 const deleteTask = (project,boxTitle,box) => {
     const index = project.tasks.findIndex(task => task.title === boxTitle);
@@ -148,7 +151,13 @@ const deleteTask = (project,boxTitle,box) => {
         project.deleteTask(index);
         box.remove();
     }
-}
+};
+// const editProjectTasks = (newTitle,newPriority,newDescription,newDueDate) =>{
+//     const project = myProject[selectedIndex];
+//     const index = project.tasks.findIndex(task => task.title === boxTitle);
+    
+//     project.tasks[index].editTask(newTitle,newPriority,newDescription,newDueDate);
+// };
 
 const changeColor = (priority,priorityDiv,box) =>{
     switch(priority){
@@ -173,7 +182,9 @@ const deleteProject = (projectInstanceDiv,projectName) => {
     const taskContainer = document.getElementById(`${projectName}-tasks`);
     myProject.splice(index, 1);
     projectInstanceDiv.remove();
-    taskContainer.remove();
+    if(taskContainer){
+        taskContainer.remove();
+    }
 };
 
 function cancelTask(taskBox,checkbox){
@@ -187,9 +198,45 @@ function cancelTask(taskBox,checkbox){
         console.log(this.checked)
    })
 };
+function editTask(taskDiv,title, dueDate, priority,description,titlediv,dueDateDiv,priorityDiv){
+    const editDialog = document.getElementById('edittasksdialog');
+    const editForm = document.getElementById('edit-form');
+    taskDiv.addEventListener("click",() => {
+        const titleInput = editDialog.querySelector('[name="task-title"]');
+        const descriptionInput = editDialog.querySelector('[name="description"');
+        const duedateInput = editDialog.querySelector('[name="date"]');
+        const prorityInput = editDialog.querySelector('[name="priority"]');
+        
+        duedateInput.value = dueDate;
+        titleInput.value = title;
+        descriptionInput.value = description;
+        prorityInput.value = priority;
 
-// const myProject = [];
-// console.log(myProject)
+        editDialog.showModal();
+
+        const handleTaskFormSubmit = (e) => {
+            e.preventDefault();
+    
+            const formData = new FormData(editForm);
+            const newTitle = formData.get('task-title');
+            const newDescription = formData.get('description');
+            const newDueDate = formData.get('date');
+            const newPriority = formData.get('priority');
+    
+            const project = myProject[selectedIndex];
+            const index = project.tasks.findIndex(task => task.title === title);
+            
+            project.editTask(index,newTitle,newPriority,newDescription,newDueDate);
+            titlediv.textContent = newTitle;
+            dueDateDiv.textContent = newDueDate;
+            priorityDiv.textContent = newPriority;
+
+            editDialog.close();
+        };
+        editForm.addEventListener('submit', handleTaskFormSubmit);
+    })
+}
+
 
 showProjectDialog();
 showTaskDialog();
