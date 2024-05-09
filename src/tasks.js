@@ -1,5 +1,6 @@
 import { createTaskDiv ,selectedIndex} from "./DOM";
 import { myProject } from "./project";
+import { addTasktoLocalStroage, saveProjectToLocalStorage } from "./storage";
 function TasktoDO(title, priority, description, dueDate, notes, taskStatus) {
     return {
         title,
@@ -20,6 +21,13 @@ function appendTasks(project) {
             createTaskDiv(taskContainer, task.title, task.dueDate, task.priority,task.description);
         }
     });
+    // saveProjectToLocalStorage(myProject);
+
+    // saveProjectToLocalStorage();
+    // const serializedProject = JSON.stringify(project);
+    // localStorage.setItem("project",serializedProject);
+    // const deserialized = JSON.parse(localStorage.getItem("project"));
+    // console.log(deserialized);
 };
 
 function taskFormSubmission() {
@@ -28,7 +36,7 @@ function taskFormSubmission() {
 
     const index = selectedIndex;
     const project = myProject[index];
-    console.log(project)
+    // console.log(project)
 
     const handleTaskFormSubmit = (e) => {
         e.preventDefault();
@@ -46,14 +54,15 @@ function taskFormSubmission() {
                 appendTasks(project);
                 console.log(project)
             }
-        }
+        };
+        addTasktoLocalStroage(taskTitle, taskPriority, taskDescription, taskDueDate); 
         taskDialog.close();
         taskForm.reset();
     };
     taskForm.addEventListener('submit', handleTaskFormSubmit);
 }
 
-
+console.log(myProject)
 
 export{TasktoDO,
     appendTasks,taskFormSubmission

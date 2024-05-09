@@ -1,6 +1,8 @@
 import { TasktoDO } from "./tasks";
 import { appendProject } from "./DOM";
-const myProject = [];
+// import { saveProjectToLocalStorage } from "./storage";
+
+var myProject = [];
 function Project(name) {
     const tasks = [];
     let index = 0;
@@ -71,6 +73,7 @@ function ProjectSubmission() {
             appendProject(projectName);
             myDialog.close();
             form.reset();
+            // saveProjectToLocalStorage();
         });
         form.addEventListener("keydown",(e) => {
             const code = e.keyCode;

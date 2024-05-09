@@ -1,8 +1,16 @@
 import {myProject,createNewProject,ProjectSubmission} from "./project";
 import { showProjectDialog,showTaskDialog} from "./dialog";
 import { taskFormSubmission } from "./tasks";
-import { roundToNearestMinutes } from "date-fns";
-import { tr } from "date-fns/locale/tr";
+import { roundToNearestMinutes,format } from "date-fns";
+import { saveProjectToLocalStorage } from "./storage";
+// import { tr } from "date-fns/locale/tr"
+
+console.log(myProject)
+
+// const saveProjectToLocalStorage = (myProject) => {
+//     localStorage.setItem("projects", JSON.stringify(myProject));
+// }
+
 
 let counter = 0;
 let selectedIndex = -1;
@@ -42,6 +50,8 @@ function appendProject(projectName) {
         dropdownContent.classList.remove("show-content");
     });
     const project = createNewProject(projectName);
+    // saveProjectToLocalStorage()'
+
 
     projectInstanceDiv.appendChild(nameDiv);
     dropdownContent.append(renameIcon, deleteIcon);
@@ -69,6 +79,7 @@ function appendProject(projectName) {
     nameDiv.addEventListener("mouseout",() => {
         nameDiv.setAttribute("contenteditable", 'false');
     })
+    saveProjectToLocalStorage(project);
 }
 
 function displayTask(project) {
@@ -152,12 +163,6 @@ const deleteTask = (project,boxTitle,box) => {
         box.remove();
     }
 };
-// const editProjectTasks = (newTitle,newPriority,newDescription,newDueDate) =>{
-//     const project = myProject[selectedIndex];
-//     const index = project.tasks.findIndex(task => task.title === boxTitle);
-    
-//     project.tasks[index].editTask(newTitle,newPriority,newDescription,newDueDate);
-// };
 
 const changeColor = (priority,priorityDiv,box) =>{
     switch(priority){
@@ -236,10 +241,22 @@ function editTask(taskDiv,title, dueDate, priority,description,titlediv,dueDateD
         editForm.addEventListener('submit', handleTaskFormSubmit);
     })
 }
+function loadSavedData(){
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    console.log(projects);
+    projects.forEach(project => {
+        appendProject(project.name)
+        appendTasks(project)
+    });
+};
+
+if(localStorage.getItem("projects")){
+    // loadSavedData();
+};
 
 
 showProjectDialog();
 showTaskDialog();
 ProjectSubmission();
 taskFormSubmission();
-export{createTaskDiv,appendProject,selectedIndex}
+export{createTaskDiv,appendProject,selectedIndex,myProject}

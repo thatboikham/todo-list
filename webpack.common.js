@@ -7,6 +7,7 @@ module.exports = {
     project: './src/project.js',
     tasks: './src/tasks.js',
     dialog: './src/dialog.js',
+    storage: './src/storage.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -25,6 +26,9 @@ module.exports = {
         },
         {
           src: '.scr/dialog.js'
+        },
+        {
+          src: '.scr/storage.js'
         },
       ]
     }),
