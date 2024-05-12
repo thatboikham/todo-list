@@ -14,13 +14,15 @@ function TasktoDO(title, priority, description, dueDate, notes, taskStatus) {
 
 function appendTasks(project) {
     const taskContainer = document.getElementById(`${project.name}-tasks`);
+    if(taskContainer){
+        project.tasks.forEach(task => {
+            const existingTask = taskContainer.querySelector(`[data-title="${task.title}"]`);
+            if (!existingTask) {
+                createTaskDiv(taskContainer, task.title, task.dueDate, task.priority,task.description);
+            }
+        });
 
-    project.tasks.forEach(task => {
-        const existingTask = taskContainer.querySelector(`[data-title="${task.title}"]`);
-        if (!existingTask) {
-            createTaskDiv(taskContainer, task.title, task.dueDate, task.priority,task.description);
-        }
-    });
+    }
     // saveProjectToLocalStorage(myProject);
 
     // saveProjectToLocalStorage();

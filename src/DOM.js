@@ -1,6 +1,6 @@
 import {myProject,createNewProject,ProjectSubmission} from "./project";
 import { showProjectDialog,showTaskDialog} from "./dialog";
-import { taskFormSubmission } from "./tasks";
+import { taskFormSubmission, appendTasks } from "./tasks";
 import { roundToNearestMinutes,format } from "date-fns";
 import { saveProjectToLocalStorage } from "./storage";
 // import { tr } from "date-fns/locale/tr"
@@ -50,7 +50,7 @@ function appendProject(projectName) {
         dropdownContent.classList.remove("show-content");
     });
     const project = createNewProject(projectName);
-    // saveProjectToLocalStorage()'
+    saveProjectToLocalStorage(project);
 
 
     projectInstanceDiv.appendChild(nameDiv);
@@ -79,7 +79,6 @@ function appendProject(projectName) {
     nameDiv.addEventListener("mouseout",() => {
         nameDiv.setAttribute("contenteditable", 'false');
     })
-    saveProjectToLocalStorage(project);
 }
 
 function displayTask(project) {
@@ -243,16 +242,19 @@ function editTask(taskDiv,title, dueDate, priority,description,titlediv,dueDateD
 }
 function loadSavedData(){
     const projects = JSON.parse(localStorage.getItem("projects"));
-    console.log(projects);
-    projects.forEach(project => {
-        appendProject(project.name)
-        appendTasks(project)
-    });
+    // console.log(projects);
+    if(projects){
+        if(projects.length > 0){
+            projects.forEach(project => {
+                displayTask(project);
+                appendProject(project.name)
+                appendTasks(project)
+            });
+    
+        }
+    }
 };
-
-if(localStorage.getItem("projects")){
-    // loadSavedData();
-};
+loadSavedData();
 
 
 showProjectDialog();
